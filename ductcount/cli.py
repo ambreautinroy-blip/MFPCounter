@@ -33,7 +33,8 @@ def setup(images, models=None):
     f = f[~f.dup]
     cuts = f.groupby(["mfp", "section", "cut"]).size()
     log(f"found {len(t)} image files -> {len(f)} fields in {len(cuts)} cuts "
-        f"({f.mfp.nunique()} mice); {int(f.points.notna().sum())} fields have ImageJ marks "
+        f"({f.mfp.nunique()} {'mouse' if f.mfp.nunique() == 1 else 'mice'}); "
+        f"{int(f.points.notna().sum())} fields have ImageJ marks "
         f"({int(f.n.fillna(0).sum())} marks)")
     for s in skipped[:10]:
         log(f"  skipped (name not recognised): {os.path.relpath(s, images)}")
