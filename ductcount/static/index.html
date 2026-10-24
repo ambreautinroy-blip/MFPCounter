@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Duct Counter · T47D MFP</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/static/style.css">
+<link rel="icon" href="data:,">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">Duct Counter <span class="muted">T47D mammary fat pad</span></div>
+  <div class="top-right">
+    <span id="model-label" class="muted"></span>
+    <span id="job-pill" class="pill" hidden></span>
+    <a class="btn" href="/api/export/sections.csv">Export cuts CSV</a>
+    <a class="btn" href="/api/export/fields.csv">Export fields CSV</a>
+  </div>
+</header>
+
+<div class="layout">
+  <nav id="tree" class="sidebar"></nav>
+
+  <main class="main">
+    <div class="main-head">
+      <div>
+        <h1 id="title">Select a cut</h1>
+        <div id="subtitle" class="muted"></div>
+      </div>
+      <div class="head-tools">
+      <div id="align-tools" class="row-inline">
+        <button class="btn" id="align-edit" title="Move / rotate fields that are misplaced in the stitched cut">Edit alignment</button>
+        <button class="btn" id="align-cancel" hidden>Cancel</button>
+        <button class="btn primary" id="align-save" hidden>Save alignment</button>
+      </div>
+      <div class="seg" id="view-switch">
+        <button data-view="summary">Summary</button>
+        <button data-view="overview" class="on">Overview</button>
+        <button data-view="field">Field</button>
+      </div>
+      </div>
+    </div>
+    <div id="strip" class="strip"></div>
+    <div id="summary" class="summary" hidden></div>
+    <div id="viewer" class="viewer">
+      <canvas id="canvas"></canvas>
+      <div id="hint" class="hint"></div>
+    </div>
+  </main>
+
+  <aside class="panel">
+    <section>
+      <h2>Counts</h2>
+      <table class="counts" id="counts"></table>
+    </section>
+
+    <section id="field-tools">
+      <h2>Annotate</h2>
+      <div class="seg full" id="cls-switch">
+        <button data-cls="normal" class="on"><i class="dot normal"></i>Normal <kbd>1</kbd></button>
+        <button data-cls="atypical"><i class="dot atypical"></i>Atypical <kbd>2</kbd></button>
+      </div>
+      <p class="help">Click to add a duct. Click a mark to select it, <kbd>Del</kbd> to remove (or right-click). Drag to pan, wheel to zoom. <kbd>←</kbd><kbd>→</kbd> fields, <kbd>↑</kbd><kbd>↓</kbd> cuts.</p>
+      <div class="row">
+        <button class="btn" id="accept-model" title="Replace this field's marks with the model's counted detections">Use model marks</button>
+        <button class="btn" id="clear-field">Clear field</button>
+      </div>
+      <label class="check"><input type="checkbox" id="reviewed"> Field reviewed (used for training)</label>
+    </section>
+
+    <section>
+      <h2>Layers</h2>
+      <label class="check"><input type="checkbox" id="l-manual" checked><i class="dot normal"></i>Manual marks</label>
+      <label class="check"><input type="checkbox" id="l-model" checked><i class="ring model"></i>Model detections <kbd>M</kbd></label>
+      <label class="check"><input type="checkbox" id="l-same" checked><i class="ring same"></i>Counted in another field</label>
+      <label class="check"><input type="checkbox" id="l-cuts"><i class="ring cuts"></i>Marks in the other cuts</label>
+      <label class="check"><input type="checkbox" id="l-target"><i class="blob target"></i>Training target <kbd>T</kbd></label>
+      <label class="check"><input type="checkbox" id="l-heat"><i class="blob heat"></i>Model heatmap <kbd>H</kbd></label>
+    </section>
+
+    <section>
+      <h2>Model</h2>
+      <div class="row">
+        <button class="btn primary" id="run-train" title="Train a new model on all reviewed fields, then predict everything">Retrain</button>
+        <button class="btn" id="run-infer">Predict all</button>
+      </div>
+      <p class="help">Retrain fine-tunes each cross-validation model without its own mouse: corrections on a
+        mouse improve the predictions of the <em>other</em> mice. Tag atypical ducts by classifying every duct of a field.</p>
+      <pre id="job-log" class="log"></pre>
+    </section>
+  </aside>
+</div>
+<script src="/static/app.js"></script>
+</body>
+</html>

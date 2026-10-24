@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+.venv
+
+# Data, images, caches and trained weights never go in the repository
+data/
+AmbreMicroscopeImages/
+ductcount/cache/
+ductcount/models/
+*.pt
+*.pkl
+*.zip
+*.tif
+*.tiff
+*.jpg
+*.png
+
+# Local notes with unpublished results
+REPORT.md
+
+.DS_Store
