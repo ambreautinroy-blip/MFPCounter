@@ -165,7 +165,8 @@ def mosaic_points(cid: str):
 
 @app.get("/img/mosaic/{cid}")
 def img_mosaic(cid: str):
-    return FileResponse(path("mosaics", cid + ".jpg"), headers={"Cache-Control": "max-age=3600"})
+    # revalidate every time: the mosaic is rebuilt when a cut is re-aligned
+    return FileResponse(path("mosaics", cid + ".jpg"), headers={"Cache-Control": "no-cache"})
 
 
 @app.get("/img/field/{cid}/{field}")
