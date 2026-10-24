@@ -15,7 +15,7 @@ Requires [uv](https://docs.astral.sh/uv/) and Python ≥ 3.12 (macOS with Apple 
 GPU through MPS; CUDA or CPU also work).
 
 ```bash
-git clone <this repository> && cd ductcount
+git clone https://github.com/ambreautinroy-blip/MFPCounter.git && cd MFPCounter
 uv sync
 ```
 
